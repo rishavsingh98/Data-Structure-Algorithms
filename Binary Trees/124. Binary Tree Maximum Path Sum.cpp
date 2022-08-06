@@ -19,6 +19,32 @@ The number of nodes in the tree is in the range [1, 3 * 104].
 -1000 <= Node.val <= 1000
 
 */
+//Compact Solution
+class Solution {
+public:
+    int res;
+    int maxPathSum(TreeNode* root)
+    {
+        res = root->val;
+        maxPathSumRec(root);
+        return res;
+    }
+    
+    int maxPathSumRec(TreeNode* root)
+    {
+        if(!root)
+            return 0;
+        
+        int left = max(maxPathSumRec(root->left),0);
+        int right = max(maxPathSumRec(root->right),0);
+        
+        res = max(res, root->val + left + right);
+        
+        return root->val + max(left, right);
+    }
+};
+
+//Alternative solution withoutb Global Variable
 class Solution {
 public:
     pair<int,int> maxSumPathRec(TreeNode* root)
