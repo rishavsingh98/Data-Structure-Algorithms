@@ -29,6 +29,8 @@ Constraints:
 All the values of coins are unique.
 0 <= amount <= 5000
 */
+
+//Time Complexity : O(nm), Space Complexity : O(n)
 class Solution {
 public:
     int change(int amount, vector<int>& coins)
@@ -42,5 +44,29 @@ public:
             }
         }
         return dp[amount];
+    }
+};
+
+//Time Complexity : O(nm), Space Complexity : O(nm)
+class Solution {
+public:
+    int change(int amount, vector<int>& coins)
+    {
+        int nCoins = coins.size();
+        int dp[nCoins + 1][amount + 1];
+        memset(dp, 0, sizeof(dp));
+        for(int i = 0; i <= nCoins; i++)
+            dp[i][0] = 1;
+        
+        for (int coin = 1; coin <= nCoins; coin++)
+        {
+            for (int i = 1; i <= amount; i++)
+            {
+                dp[coin][i] += dp[coin-1][i];
+                if(i - coins[coin-1] >= 0)
+                    dp[coin][i] += dp[coin][i - coins[coin-1]];
+            }
+        }
+        return dp[nCoins][amount];
     }
 };
