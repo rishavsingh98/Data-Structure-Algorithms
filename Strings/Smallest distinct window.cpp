@@ -32,19 +32,15 @@ class Solution{
             
             cmap[str.at(end)]++;
             
-            if(curr_count == count)
+            while(curr_count == count)
             {
                 min_str = min(min_str, end - start + 1);
-                while(curr_count == count)
-                {
-                    min_str = min(min_str, end - start + 1);
-                    cmap[str.at(start)]--;
-                    if(cmap[str.at(start)] == 0)
-                        curr_count--;
-                    start++;
-                }
-                
+                cmap[str.at(start)]--;
+                if(cmap[str.at(start)] == 0)
+                    curr_count--;
+                start++;
             }
+    
             end++;
         }
         return min_str;
